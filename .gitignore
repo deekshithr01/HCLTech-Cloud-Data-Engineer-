@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
+
+# VS Code workspace settings
+.vscode/
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
+
+# PySpark generated files
+spark-warehouse/
+metastore_db/
+
+# Java
+*.class
+
+# Credentials and private keys
+*.pem
+*.key
+credentials
+credentials.json
+
+# Local database files
+*.db
+*.sqlite3
