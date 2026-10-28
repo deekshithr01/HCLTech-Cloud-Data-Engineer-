@@ -6,9 +6,9 @@ To perform data cleaning and aggregation using PySpark DataFrames by removing du
 
 ## 1. Dataset
 
-The input file is `PySpark/data/transactions.csv`. It contains transaction ID, product, quantity, unit price, and transaction date.
+The input file is `PySpark/data/transactions.csv`. It contains six columns: `TransactionID`, `CustomerID`, `TransactionDate`, `Product`, `Quantity`, and `UnitPrice`.
 
-The dataset contains 12 records, including a duplicate transaction, a missing quantity, and an invalid date.
+The dataset contains 12 records, including a duplicate transaction, a missing quantity, and an invalid date. The program uses an explicit PySpark schema to read the CSV file with its header.
 
 ## 2. Schema Definition and CSV Loading
 

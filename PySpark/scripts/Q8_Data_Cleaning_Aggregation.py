@@ -15,16 +15,17 @@ spark = SparkSession.builder \
 
 spark.sparkContext.setLogLevel("ERROR")
 
-# Define schema
+# Define schema according to the model question paper
 schema = StructType([
     StructField("TransactionID", StringType(), True),
+    StructField("CustomerID", StringType(), True),
+    StructField("TransactionDate", StringType(), True),
     StructField("Product", StringType(), True),
     StructField("Quantity", IntegerType(), True),
-    StructField("UnitPrice", DoubleType(), True),
-    StructField("TransactionDate", StringType(), True)
+    StructField("UnitPrice", DoubleType(), True)
 ])
 
-# Read CSV file
+# Read CSV with header and defined schema
 df = spark.read.csv(
     "PySpark/data/transactions.csv",
     header=True,
@@ -40,18 +41,21 @@ df.printSchema()
 # Remove duplicate transactions using TransactionID
 df_clean = df.dropDuplicates(["TransactionID"])
 
-# Remove rows with missing required values
+# Remove records missing required values
 df_clean = df_clean.dropna(
-    subset=["TransactionID", "Product", "Quantity", "UnitPrice"]
+    subset=[
+        "TransactionID", "CustomerID", "Product",
+        "Quantity", "UnitPrice"
+    ]
 )
 
-# Convert dates safely; invalid dates become NULL
+# Safely convert dates; invalid dates become NULL
 df_clean = df_clean.withColumn(
     "TransactionDate",
     try_to_date(col("TransactionDate"), "yyyy-MM-dd")
 )
 
-# Remove rows with invalid or missing dates
+# Remove invalid or missing dates
 df_clean = df_clean.filter(
     col("TransactionDate").isNotNull()
 )
